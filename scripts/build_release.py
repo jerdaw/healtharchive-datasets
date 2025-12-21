@@ -84,15 +84,17 @@ def _download_export_to_gzip_jsonl(
     limit: int,
     timeout: float,
     user_agent: str,
+    max_requests: int | None = None,
 ) -> dict[str, Any]:
     after_id: int | None = None
     rows = 0
     min_id: int | None = None
     max_id: int | None = None
     requests_made = 0
+    truncated = False
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    with gzip.open(out_path, "wb", compresslevel=6, mtime=0) as gz:
+    with gzip.open(out_path, "wb", compresslevel=6) as gz:
         while True:
             params = {
                 "format": "jsonl",
@@ -128,6 +130,9 @@ def _download_export_to_gzip_jsonl(
                 resp.close()
 
             requests_made += 1
+            if max_requests is not None and requests_made >= max_requests:
+                truncated = True
+                break
             if page_rows == 0:
                 break
             if last_id is None:
@@ -146,6 +151,7 @@ def _download_export_to_gzip_jsonl(
         "maxId": max_id,
         "limitPerRequest": limit,
         "requestsMade": requests_made,
+        "truncated": truncated,
         "filename": out_path.name,
     }
 
@@ -157,6 +163,7 @@ def main() -> int:
     parser.add_argument("--tag", required=True, help="Release tag (e.g., healtharchive-dataset-YYYY-MM-DD).")
     parser.add_argument("--timeout-seconds", type=float, default=60.0, help="HTTP timeout per request.")
     parser.add_argument("--limit", type=int, default=10000, help="Rows per request (paginates via afterId).")
+    parser.add_argument("--max-requests", type=int, help="Optional cap on requests per export (debug/safety).")
     args = parser.parse_args()
 
     socket.setdefaulttimeout(args.timeout_seconds)
@@ -187,6 +194,7 @@ def main() -> int:
         limit=limit,
         timeout=args.timeout_seconds,
         user_agent=user_agent,
+        max_requests=args.max_requests,
     )
     changes_meta = _download_export_to_gzip_jsonl(
         api_base=api_base,
@@ -196,6 +204,7 @@ def main() -> int:
         limit=limit,
         timeout=args.timeout_seconds,
         user_agent=user_agent,
+        max_requests=args.max_requests,
     )
 
     snapshots_sha = _sha256_file(snapshots_path)
