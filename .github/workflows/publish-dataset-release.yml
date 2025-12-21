@@ -1,0 +1,51 @@
+name: Publish dataset release
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    # Quarterly: 1st day of Jan/Apr/Jul/Oct at 06:00 UTC
+    - cron: "0 6 1 1,4,7,10 *"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Compute tag
+        id: tag
+        run: |
+          DATE_UTC="$(date -u +%Y-%m-%d)"
+          echo "date_utc=$DATE_UTC" >> "$GITHUB_OUTPUT"
+          echo "tag=healtharchive-dataset-$DATE_UTC" >> "$GITHUB_OUTPUT"
+
+      - name: Build release artifacts
+        env:
+          API_BASE: https://api.healtharchive.ca
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          rm -rf dist
+          python scripts/build_release.py --api-base "$API_BASE" --out-dir dist --tag "$TAG"
+          ls -la dist
+
+      - name: Create or update GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag.outputs.tag }}
+          name: HealthArchive dataset ${{ steps.tag.outputs.date_utc }}
+          allowUpdates: true
+          artifacts: "dist/*"
+          artifactErrorsFailBuild: true
+          body: |
+            Metadata-only dataset release for HealthArchive.ca.
+
+            - Not medical advice; not current guidance; independent project.
+            - Files: `healtharchive-snapshots.jsonl.gz`, `healtharchive-changes.jsonl.gz`, `manifest.json`, `SHA256SUMS`.
+            - Data dictionary: https://www.healtharchive.ca/exports
