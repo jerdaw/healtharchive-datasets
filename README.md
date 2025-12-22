@@ -37,3 +37,8 @@ Releases are generated automatically by GitHub Actions by calling the public exp
 - `GET https://api.healtharchive.ca/api/exports/changes`
 
 The workflow paginates using `afterId` and writes a single gzipped JSONL for each export.
+
+## Release schedule
+
+- Quarterly (Jan/Apr/Jul/Oct) via GitHub Actions.
+- Note: GitHub may disable scheduled workflows after 60 days of repo inactivity. If that happens, re-enable the workflow in GitHub Actions or add a keepalive workflow to create periodic activity.
