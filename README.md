@@ -41,4 +41,4 @@ The workflow paginates using `afterId` and writes a single gzipped JSONL for eac
 ## Release schedule
 
 - Quarterly (Jan/Apr/Jul/Oct) via GitHub Actions.
-- Note: GitHub may disable scheduled workflows after 60 days of repo inactivity. If that happens, re-enable the workflow in GitHub Actions or add a keepalive workflow to create periodic activity.
+- Note: GitHub may disable scheduled workflows after 60 days of repo inactivity. This repo includes a weekly keepalive workflow to prevent that.

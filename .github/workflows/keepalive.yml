@@ -1,0 +1,36 @@
+name: Keepalive (prevent schedule disable)
+
+on:
+  schedule:
+    # GitHub can disable scheduled workflows after 60 days of repo inactivity.
+    # This weekly keepalive commit ensures the quarterly publish workflow remains eligible.
+    - cron: "0 7 * * 1" # Mondays 07:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update keepalive file
+        run: |
+          DATE_UTC="$(date -u +%Y-%m-%d)"
+          printf "%s\n" "$DATE_UTC" > KEEPALIVE.md
+
+      - name: Commit and push (if changed)
+        run: |
+          if git diff --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add KEEPALIVE.md
+          git commit -m "Keepalive: ${DATE_UTC}"
+          git push
