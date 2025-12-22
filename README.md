@@ -52,3 +52,9 @@ sha256sum -c SHA256SUMS
 ```
 
 If you only downloaded `SHA256SUMS`, the verification will fail because the referenced files are missing.
+
+## Documentation hygiene
+
+Canonical documentation guidelines live in:
+
+- `healtharchive-backend/docs/documentation-guidelines.md`
