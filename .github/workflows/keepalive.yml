@@ -23,7 +23,11 @@ jobs:
 
       - name: Commit and push (if changed)
         run: |
-          if git diff --quiet; then
+          # `git diff` ignores untracked files; stage first so the initial
+          # creation of KEEPALIVE.md is detected.
+          git add KEEPALIVE.md
+
+          if git diff --cached --quiet; then
             echo "No changes."
             exit 0
           fi
@@ -31,6 +35,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add KEEPALIVE.md
           git commit -m "Keepalive: ${DATE_UTC}"
           git push
