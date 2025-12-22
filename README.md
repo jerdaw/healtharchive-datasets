@@ -42,3 +42,13 @@ The workflow paginates using `afterId` and writes a single gzipped JSONL for eac
 
 - Quarterly (Jan/Apr/Jul/Oct) via GitHub Actions.
 - Note: GitHub may disable scheduled workflows after 60 days of repo inactivity. This repo includes a weekly keepalive workflow to prevent that.
+
+## Verify a release (checksums)
+
+Download the release assets into the same directory as `SHA256SUMS`, then verify:
+
+```bash
+sha256sum -c SHA256SUMS
+```
+
+If you only downloaded `SHA256SUMS`, the verification will fail because the referenced files are missing.
