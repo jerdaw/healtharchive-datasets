@@ -158,12 +158,22 @@ def _download_export_to_gzip_jsonl(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build a HealthArchive dataset release bundle.")
-    parser.add_argument("--api-base", default="https://api.healtharchive.ca", help="API host base URL.")
+    parser.add_argument(
+        "--api-base", default="https://api.healtharchive.ca", help="API host base URL."
+    )
     parser.add_argument("--out-dir", default="dist", help="Output directory for release files.")
-    parser.add_argument("--tag", required=True, help="Release tag (e.g., healtharchive-dataset-YYYY-MM-DD).")
-    parser.add_argument("--timeout-seconds", type=float, default=60.0, help="HTTP timeout per request.")
-    parser.add_argument("--limit", type=int, default=10000, help="Rows per request (paginates via afterId).")
-    parser.add_argument("--max-requests", type=int, help="Optional cap on requests per export (debug/safety).")
+    parser.add_argument(
+        "--tag", required=True, help="Release tag (e.g., healtharchive-dataset-YYYY-MM-DD)."
+    )
+    parser.add_argument(
+        "--timeout-seconds", type=float, default=60.0, help="HTTP timeout per request."
+    )
+    parser.add_argument(
+        "--limit", type=int, default=10000, help="Rows per request (paginates via afterId)."
+    )
+    parser.add_argument(
+        "--max-requests", type=int, help="Optional cap on requests per export (debug/safety)."
+    )
     args = parser.parse_args()
 
     socket.setdefaulttimeout(args.timeout_seconds)
@@ -231,7 +241,9 @@ def main() -> int:
     }
 
     manifest_path = out_dir / "manifest.json"
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    manifest_path.write_text(
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
     manifest_sha = _sha256_file(manifest_path)
 
     sums_path = out_dir / "SHA256SUMS"
