@@ -58,3 +58,8 @@ If you only downloaded `SHA256SUMS`, the verification will fail because the refe
 Canonical documentation guidelines live in:
 
 - `healtharchive-backend/docs/documentation-guidelines.md`
+
+## Local dev (optional)
+
+- Create venv: `make venv`
+- Run checks (what CI runs): `make check`
