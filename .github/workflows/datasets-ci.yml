@@ -34,11 +34,5 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install ruff
 
-      - name: Format check (ruff)
-        run: ruff format --check .
-
-      - name: Lint (ruff)
-        run: ruff check .
-
-      - name: Compile (python)
-        run: python -m compileall -q scripts
+      - name: Check
+        run: make check
