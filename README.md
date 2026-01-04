@@ -38,6 +38,15 @@ Releases are generated automatically by GitHub Actions by calling the public exp
 
 The workflow paginates using `afterId` and writes a single gzipped JSONL for each export.
 
+## Release integrity (required)
+
+Each release build enforces:
+
+- Bundle validation (`manifest.json` required fields + invariants, `truncated=false`)
+- Artifact integrity (SHA-256 checksums match both `manifest.json` and `SHA256SUMS`)
+
+If validation fails, the workflow aborts and does not publish/update a release.
+
 ## Release schedule
 
 - Quarterly (Jan/Apr/Jul/Oct) via GitHub Actions.
@@ -52,6 +61,13 @@ sha256sum -c SHA256SUMS
 ```
 
 If you only downloaded `SHA256SUMS`, the verification will fail because the referenced files are missing.
+
+## Immutability / reruns
+
+Dataset releases are treated as immutable research objects.
+
+- Scheduled runs do not update an existing tag.
+- If a publish run fails mid-flight, re-run via workflow dispatch and only enable “allow update existing” if you are intentionally recovering a partial/invalid release.
 
 ## Documentation hygiene
 

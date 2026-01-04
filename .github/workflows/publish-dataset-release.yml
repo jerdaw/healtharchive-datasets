@@ -1,7 +1,13 @@
 name: Publish dataset release
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      allow_update_existing:
+        description: "Allow updating an existing release tag (not recommended; use only for recovery)."
+        required: false
+        type: boolean
+        default: false
   schedule:
     # Quarterly: 1st day of Jan/Apr/Jul/Oct at 06:00 UTC
     - cron: "0 6 1 1,4,7,10 *"
@@ -12,6 +18,10 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    concurrency:
+      group: healtharchive-datasets-publish
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v6
 
@@ -35,12 +45,21 @@ jobs:
           python scripts/build_release.py --api-base "$API_BASE" --out-dir dist --tag "$TAG"
           ls -la dist
 
+      - name: Verify checksums (required)
+        run: |
+          cd dist
+          sha256sum -c SHA256SUMS
+
+      - name: Validate release bundle (required)
+        run: |
+          python scripts/validate_release_bundle.py --bundle-dir dist
+
       - name: Create or update GitHub Release
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.tag.outputs.tag }}
           name: HealthArchive dataset ${{ steps.tag.outputs.date_utc }}
-          allowUpdates: true
+          allowUpdates: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.allow_update_existing == 'true' }}
           artifacts: "dist/*"
           artifactErrorsFailBuild: true
           body: |
@@ -49,3 +68,11 @@ jobs:
             - Not medical advice; not current guidance; independent project.
             - Files: `healtharchive-snapshots.jsonl.gz`, `healtharchive-changes.jsonl.gz`, `manifest.json`, `SHA256SUMS`.
             - Data dictionary: https://www.healtharchive.ca/exports
+
+      - name: Upload dist artifacts (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: datasets-release-dist
+          path: dist/
+          if-no-files-found: ignore
