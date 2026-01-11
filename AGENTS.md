@@ -8,11 +8,11 @@
 
 Primary docs to consult first:
 
-- `README.md` – what the dataset is, release contents, integrity rules.
-- Canonical documentation guidelines (cross-repo): `healtharchive-backend/docs/documentation-guidelines.md`
-- Export integrity contract (cross-repo): `healtharchive-backend/docs/operations/export-integrity-contract.md`
-- Dataset release runbook (cross-repo): `healtharchive-backend/docs/operations/dataset-release-runbook.md`
-- Project docs portal (multi-repo navigation): https://github.com/jerdaw/healtharchive-backend/blob/main/docs/project.md
+- `README.md` – release contents and integrity rules.
+- **Documentation Site**: Run `make docs-serve` in the backend repository root.
+- Canonical documentation guidelines: `healtharchive-backend/docs/documentation-guidelines.md`
+- Export integrity contract: `healtharchive-backend/docs/operations/export-integrity-contract.md`
+- Dataset release runbook: `healtharchive-backend/docs/operations/dataset-release-runbook.md`
 
 ---
 
