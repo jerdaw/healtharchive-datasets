@@ -71,10 +71,8 @@ Dataset releases are treated as immutable research objects.
 
 ## Documentation hygiene
 
-Canonical documentation guidelines live in:
-
-- `healtharchive-backend/docs/documentation-guidelines.md`
-- Project docs portal (multi-repo navigation): https://github.com/jerdaw/healtharchive-backend/blob/main/docs/project.md
+- **Documentation Site**: Run `make docs-serve` in the backend repository root.
+- Canonical documentation guidelines: `healtharchive-backend/docs/documentation-guidelines.md`
 
 ## Local dev (optional)
 
