@@ -71,8 +71,9 @@ Dataset releases are treated as immutable research objects.
 
 ## Documentation hygiene
 
-- **Documentation Site**: Run `make docs-serve` in the backend repository root.
-- Canonical documentation guidelines: `healtharchive-backend/docs/documentation-guidelines.md`
+- Backend docs site (MkDocs): https://docs.healtharchive.ca (built from the backend repo)
+- Canonical documentation guidelines: https://docs.healtharchive.ca/documentation-guidelines/
+- Dataset docs guidelines (this repo): `DOCUMENTATION.md`
 
 ## Local dev (optional)
 

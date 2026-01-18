@@ -19,3 +19,7 @@ If you're pushing directly to `main`, a local pre-push hook helps keep "green ma
 
 - Install: `./scripts/install-pre-push-hook.sh`
 - Bypass once: `git push --no-verify` (or set `HA_SKIP_PRE_PUSH=1`)
+
+## Documentation guidelines
+
+- Follow `DOCUMENTATION.md` (this repo) and the canonical cross-repo guidelines at https://docs.healtharchive.ca/documentation-guidelines/
