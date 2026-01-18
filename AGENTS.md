@@ -9,10 +9,11 @@
 Primary docs to consult first:
 
 - `README.md` – release contents and integrity rules.
-- **Documentation Site**: Run `make docs-serve` in the backend repository root.
-- Canonical documentation guidelines: `healtharchive-backend/docs/documentation-guidelines.md`
-- Export integrity contract: `healtharchive-backend/docs/operations/export-integrity-contract.md`
-- Dataset release runbook: `healtharchive-backend/docs/operations/dataset-release-runbook.md`
+- `DOCUMENTATION.md` – documentation boundaries + linking rules.
+- Backend docs site (MkDocs): https://docs.healtharchive.ca (built from the backend repo)
+- Canonical documentation guidelines: https://docs.healtharchive.ca/documentation-guidelines/
+- Export integrity contract: https://github.com/jerdaw/healtharchive-backend/blob/main/docs/operations/export-integrity-contract.md
+- Dataset release runbook: https://github.com/jerdaw/healtharchive-backend/blob/main/docs/operations/dataset-release-runbook.md
 
 ---
 
@@ -42,4 +43,3 @@ If asked to commit:
 - Do not change tag/immutability rules without updating docs and making it explicit in release notes.
 - Do not weaken checksum/manifest validation.
 - Keep everything public-safe: no secrets, private emails, or internal hostnames in docs or workflow logs.
-
