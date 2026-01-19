@@ -79,3 +79,14 @@ Dataset releases are treated as immutable research objects.
 
 - Create venv: `make venv`
 - Run checks (what CI runs): `make check`
+
+### Git hooks setup
+
+After cloning, enable pre-commit hooks:
+
+```bash
+bash scripts/setup-hooks.sh
+```
+
+> [!NOTE]
+> Git hooks enforce code quality checks before commits. Requires [pre-commit](https://pre-commit.com) to be installed (`pipx install pre-commit` or `mise use -g pre-commit`).
