@@ -23,6 +23,8 @@ jobs:
 
       - name: Commit and push (if changed)
         run: |
+          DATE_UTC="$(date -u +%Y-%m-%d)"
+
           # `git diff` ignores untracked files; stage first so the initial
           # creation of KEEPALIVE.md is detected.
           git add KEEPALIVE.md
@@ -32,8 +34,8 @@ jobs:
             exit 0
           fi
 
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "Jeremy Dawson"
+          git config user.email "jeremyjdawson@gmail.com"
 
           git commit -m "Keepalive: ${DATE_UTC}"
           git push
