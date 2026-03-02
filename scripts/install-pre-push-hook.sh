@@ -100,4 +100,3 @@ install -m 0755 "${tmp}" "${hook_path}"
 
 echo "Installed: ${hook_path}"
 echo "Tip: bypass once with: git push --no-verify"
-
