@@ -36,6 +36,18 @@ If asked to commit:
 - Run `make check` before pushing.
 - Never commit secrets, `.env` files, tokens, or machine-local artifacts.
 
+## Agent tool compatibility files
+
+- `AGENTS.md` is the canonical agent instruction file for this repo.
+- `CLAUDE.md` and `GEMINI.md` should be committed as relative symlinks to `AGENTS.md` for tool compatibility.
+
+## Attribution and authorship policy
+
+- Commits, docs, code comments, and release notes must list only human contributors as authors.
+- Do not add AI-assistant attribution (for example: Codex, Claude, Gemini, Copilot, ChatGPT) in authored-by/co-authored-by notes, prose, or metadata.
+- Do not rely on bot-managed auto-merge paths that stamp bot authorship or `Co-Authored-By` trailers into repository history.
+- If tooling is used, describe technical changes directly without attributing authorship to tools.
+
 ---
 
 ## Safety rails / things not to touch casually
