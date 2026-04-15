@@ -12,8 +12,8 @@ Primary docs to consult first:
 - `DOCUMENTATION.md` – documentation boundaries + linking rules.
 - Backend docs site (MkDocs): https://docs.healtharchive.ca (built from the backend repo)
 - Canonical documentation guidelines: https://docs.healtharchive.ca/documentation-guidelines/
-- Export integrity contract: https://github.com/jerdaw/healtharchive-backend/blob/main/docs/operations/export-integrity-contract.md
-- Dataset release runbook: https://github.com/jerdaw/healtharchive-backend/blob/main/docs/operations/dataset-release-runbook.md
+- Export integrity contract: https://github.com/jerdaw/healtharchive/blob/main/docs/operations/export-integrity-contract.md
+- Dataset release runbook: https://github.com/jerdaw/healtharchive/blob/main/docs/operations/dataset-release-runbook.md
 
 ---
 
