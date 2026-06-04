@@ -7,6 +7,19 @@ __pycache__/
 venv/
 .env
 .env.*
+
+# Local/private maintainer notes. Do not commit plaintext private notes.
+private/**/*.md
+private/**/*.txt
+private/**/*.log
+private/**/*.local.*
+.private/
+
+# Encrypted private notes may be tracked only with an intentional workflow.
+!private/**/*.age
+!private/**/*.md.age
+!private/**/*.enc.md
+
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/

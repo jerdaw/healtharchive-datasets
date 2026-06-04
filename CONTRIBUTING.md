@@ -5,6 +5,10 @@
 - Create venv: `make venv`
 - Full checks (what CI runs): `make check`
 
+`make check` runs formatting, linting, Python compilation, unit tests, and
+documentation reference checks. This repo has no browser or Playwright test
+suite; keep browser automation in the repos that own browser surfaces.
+
 ## Optional: pre-commit
 
 This repo includes a `.pre-commit-config.yaml` with fast, mechanical checks (whitespace/EOF, YAML/TOML validation, detecting private keys).
@@ -19,6 +23,12 @@ If you're pushing directly to `main`, a local pre-push hook helps keep "green ma
 
 - Install: `./scripts/install-pre-push-hook.sh`
 - Bypass once: `git push --no-verify` (or set `HA_SKIP_PRE_PUSH=1`)
+
+## GitHub Actions usage
+
+Keep maintenance and docs-only changes batched where practical so the public
+repo stays within the GitHub Actions free tier. The keepalive workflow is
+excluded from the main CI trigger because it only updates `KEEPALIVE.md`.
 
 ## Documentation guidelines
 

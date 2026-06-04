@@ -12,8 +12,8 @@ Primary docs to consult first:
 - `DOCUMENTATION.md` – documentation boundaries + linking rules.
 - Backend docs site (MkDocs): https://docs.healtharchive.ca (built from the backend repo)
 - Canonical documentation guidelines: https://docs.healtharchive.ca/documentation-guidelines/
-- Export integrity contract: https://github.com/jerdaw/healtharchive-backend/blob/main/docs/operations/export-integrity-contract.md
-- Dataset release runbook: https://github.com/jerdaw/healtharchive-backend/blob/main/docs/operations/dataset-release-runbook.md
+- Export integrity contract: https://github.com/jerdaw/healtharchive/blob/main/docs/operations/export-integrity-contract.md
+- Dataset release runbook: https://github.com/jerdaw/healtharchive/blob/main/docs/operations/dataset-release-runbook.md
 
 ---
 
@@ -44,10 +44,18 @@ If asked to commit:
 
 ## Attribution and authorship policy
 
-- Commits, docs, code comments, release notes, and metadata must list only human contributors as authors.
-- Do not add AI-assistant attribution (for example: Codex, Claude, Gemini, Copilot, ChatGPT) in authored-by/co-authored-by lines, prose, or generated metadata.
-- Do not rely on bot-managed auto-merge paths that stamp bot authorship or `Co-Authored-By` trailers into repository history.
-- If tooling is used, describe the technical change directly without attributing authorship to the tool.
+- Commits, docs, code comments, release notes, and metadata must list only
+  human contributors as authors.
+- Do not add AI-assistant attribution (for example: Codex, Claude, Gemini,
+  Copilot, ChatGPT, or `CI User`) in authored-by/co-authored-by lines, prose,
+  or generated metadata.
+- Native GitHub automation authors such as `dependabot[bot]` and
+  `github-actions[bot]` are allowed only for commits actually authored by that
+  GitHub automation.
+- Do not rely on bot-managed auto-merge paths that stamp non-human authorship
+  or `Co-Authored-By` trailers into repository history.
+- If tooling is used, describe the technical change directly without
+  attributing authorship to the tool.
 ---
 
 ## Safety rails / things not to touch casually

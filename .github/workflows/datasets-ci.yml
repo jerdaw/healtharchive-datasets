@@ -4,10 +4,16 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - "KEEPALIVE.md"
   pull_request:
     branches:
       - main
   workflow_dispatch: {}
+
+concurrency:
+  group: datasets-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint:

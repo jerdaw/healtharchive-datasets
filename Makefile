@@ -1,4 +1,4 @@
-.PHONY: venv format format-check lint compile docs-refs check
+.PHONY: venv format format-check lint compile test docs-refs check
 
 VENV ?= .venv
 VENV_BIN := $(VENV)/bin
@@ -22,9 +22,12 @@ lint:
 
 
 compile:
-	$(PYTHON) -m compileall -q scripts
+	$(PYTHON) -m compileall -q scripts tests
+
+test:
+	$(PYTHON) -m unittest discover -s tests
 
 docs-refs:
 	$(PYTHON) scripts/check_docs_references.py
 
-check: format-check lint compile docs-refs
+check: format-check lint compile test docs-refs

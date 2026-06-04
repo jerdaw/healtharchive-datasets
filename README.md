@@ -1,7 +1,8 @@
 # HealthArchive datasets (metadata-only)
 
 This repository publishes **versioned, citable dataset releases** for
-HealthArchive.ca as **metadata-only** exports.
+HealthArchive.ca as **metadata-only** exports for public-interest archival,
+research, and monitoring use.
 
 - Source project: https://healtharchive.ca
 - Public API: https://api.healtharchive.ca/api
@@ -9,10 +10,14 @@ HealthArchive.ca as **metadata-only** exports.
 
 ## What this is / isn’t
 
-- This is an archival metadata dataset intended for reproducibility and auditability.
-- It is **not medical advice** and **not current guidance**.
+- This is an archival metadata dataset intended for reproducibility,
+  auditability, public-interest research, and monitoring of public health
+  resource changes.
+- It is **not medical advice**, **not current guidance**, and not a substitute
+  for consulting official sources or a clinician.
 - It is **not** an official government resource and is not affiliated with any public health agency.
-- Releases do **not** include raw HTML bodies or full diff bodies.
+- Releases do **not** include raw HTML, full page bodies, WARC files, or full
+  diff bodies.
 
 ## Release contents (current)
 
@@ -43,6 +48,8 @@ The workflow paginates using `afterId` and writes a single gzipped JSONL for eac
 Each release build enforces:
 
 - Bundle validation (`manifest.json` required fields + invariants, `truncated=false`)
+- Manifest notes that preserve the public contract (`metadataOnly=true`,
+  `noRawHtml=true`, `noDiffBodies=true`, `notMedicalAdvice=true`)
 - Artifact integrity (SHA-256 checksums match both `manifest.json` and `SHA256SUMS`)
 
 If validation fails, the workflow aborts and does not publish/update a release.
@@ -74,6 +81,13 @@ Dataset releases are treated as immutable research objects.
 - Backend docs site (MkDocs): https://docs.healtharchive.ca (built from the backend repo)
 - Canonical documentation guidelines: https://docs.healtharchive.ca/documentation-guidelines/
 - Dataset docs guidelines (this repo): `DOCUMENTATION.md`
+
+## Public documentation boundary
+
+This repository contains public dataset documentation and reproducible release
+information. Deployment details, credentials, monitoring configuration, private
+operational notes, and environment-specific production paths are intentionally
+excluded from public documentation.
 
 ## Local dev (optional)
 

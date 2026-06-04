@@ -43,6 +43,12 @@ def _require_dict(obj: dict[str, Any], key: str) -> dict[str, Any]:
     return value
 
 
+def _require_true(obj: dict[str, Any], key: str, *, prefix: str) -> None:
+    value = _require(obj, key)
+    if value is not True:
+        raise ValueError(f"{prefix}.{key} must be true")
+
+
 def _parse_artifact(meta: dict[str, Any], name: str) -> Artifact:
     def req_str(k: str) -> str:
         v = _require(meta, k)
@@ -205,6 +211,16 @@ def main() -> int:
 
     snapshots_artifact = _parse_artifact(snapshots, "snapshots")
     changes_artifact = _parse_artifact(changes, "changes")
+
+    notes = _require_dict(manifest, "notes")
+    for required_note in (
+        "metadataOnly",
+        "noRawHtml",
+        "noDiffBodies",
+        "notMedicalAdvice",
+        "notCurrentGuidance",
+    ):
+        _require_true(notes, required_note, prefix="manifest.notes")
 
     if not args.allow_truncated and (snapshots_artifact.truncated or changes_artifact.truncated):
         raise SystemExit(
