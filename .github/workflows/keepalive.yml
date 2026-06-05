@@ -35,7 +35,7 @@ jobs:
           fi
 
           git config user.name "Jeremy Dawson"
-          git config user.email "jeremyjdawson@gmail.com"
+          git config user.email "55965641+jerdaw@users.noreply.github.com"
 
           git commit -m "Keepalive: ${DATE_UTC}"
           git push

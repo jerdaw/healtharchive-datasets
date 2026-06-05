@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use a HealthArchive dataset release, cite the specific release tag and this repository."
+type: dataset
+title: "HealthArchive Datasets"
+authors:
+  - family-names: Dawson
+    given-names: Jeremy
+url: "https://healtharchive.ca"
+repository-code: "https://github.com/jerdaw/healtharchive-datasets"
+keywords:
+  - web-archiving
+  - public-health
+  - canada
+  - open-data
+  - datasets

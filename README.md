@@ -69,6 +69,11 @@ sha256sum -c SHA256SUMS
 
 If you only downloaded `SHA256SUMS`, the verification will fail because the referenced files are missing.
 
+## Citation
+
+If you use a dataset release, cite the specific release tag/assets you used and
+the repository metadata in `CITATION.cff`.
+
 ## Immutability / reruns
 
 Dataset releases are treated as immutable research objects.
