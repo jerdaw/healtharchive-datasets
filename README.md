@@ -58,6 +58,7 @@ If validation fails, the workflow aborts and does not publish/update a release.
 
 - Quarterly (Jan/Apr/Jul/Oct) via GitHub Actions.
 - Note: GitHub may disable scheduled workflows after 60 days of repo inactivity. This repo includes a weekly keepalive workflow to prevent that.
+- Current priorities and activation gates are tracked in `ROADMAP.md`.
 
 ## Verify a release (checksums)
 
