@@ -9,6 +9,18 @@
 documentation reference checks. This repo has no browser or Playwright test
 suite; keep browser automation in the repos that own browser surfaces.
 
+## Opening issues
+
+- Use the [bug report template](https://github.com/jerdaw/healtharchive-datasets/issues/new?template=bug_report.md)
+  for reproducible release, artifact, checksum, manifest, or validation
+  problems.
+- Use the [feature request template](https://github.com/jerdaw/healtharchive-datasets/issues/new?template=feature_request.md)
+  for metadata-only release, integrity, citation, or reproducibility proposals.
+- Search existing issues first. Do not disclose vulnerabilities publicly;
+  follow `SECURITY.md`.
+- Remove secrets, private host/path details, unpublished data, and non-public
+  provider information from issue text, logs, and attachments.
+
 ## Optional: pre-commit
 
 This repo includes a `.pre-commit-config.yaml` with fast, mechanical checks (whitespace/EOF, YAML/TOML validation, detecting private keys).
