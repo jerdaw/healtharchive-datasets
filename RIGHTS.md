@@ -45,8 +45,8 @@ Current endpoint: `/api/exports/snapshots`
 | `status_code` | Source-derived metadata | HTTP status observed during capture, when available. |
 | `mime_type` | Source-derived metadata | Content type observed during capture, when available. |
 | `title` | Source-derived metadata | Extracted page title, when available; this is a limited source-derived text field, not a page body. |
-| `capture_backend` | Project metadata | Capture-system label recorded by HealthArchive. It is included in the coordinated English/French data-dictionary correction, whose public availability remains pending the ordered rollout. |
-| `capture_fidelity` | Generated identifier or analysis | HealthArchive capture-fidelity label. It is included in the coordinated English/French data-dictionary correction pending rollout; its generation and quality criteria remain under review. |
+| `capture_backend` | Project metadata | Capture-system label recorded by HealthArchive. The reviewed English/French data-dictionary sources for the coordinated application rollout include this field; consumers should verify the currently deployed dictionary version before relying on it. |
+| `capture_fidelity` | Generated identifier or analysis | HealthArchive capture-fidelity label. The reviewed English/French data-dictionary sources for the coordinated application rollout include this field; consumers should verify the currently deployed dictionary version before relying on it. Its generation and quality criteria remain under review. |
 | `job_id` | Generated identifier or analysis | Numeric identifier for the HealthArchive archive job or edition, when available. |
 | `job_name` | Project metadata | HealthArchive-authored archive job or edition label, when available. |
 | `snapshot_url` | Generated identifier or analysis | Stable HealthArchive URL generated for the snapshot detail page. |
@@ -111,9 +111,10 @@ before another release is approved:
 
 - Source-specific terms and the appropriate treatment of source-derived titles,
   URLs, organization names, acronyms, and other marks.
-- The generation and quality criteria for `capture_fidelity`. Both capture
-  fields are present in the coordinated English/French dictionary correction,
-  but that correction is not public until the ordered rollout is completed.
+- The generation and quality criteria for `capture_fidelity`. The reviewed
+  English/French dictionary sources include both capture fields; verify that
+  the currently deployed dictionary version matches the current export before
+  relying on it.
 - The scope, if any, of a future licence for project-created metadata and code,
   considered separately from source-derived and source-identifying fields.
 - A public HealthArchive exports page emitted a CC BY 4.0 structured-data value
