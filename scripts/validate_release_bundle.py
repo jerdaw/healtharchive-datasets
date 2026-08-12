@@ -8,6 +8,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+if __package__:
+    from .export_schema import require_expected_export_fields
+else:
+    from export_schema import require_expected_export_fields
+
 
 @dataclass(frozen=True)
 class Artifact:
@@ -145,12 +150,24 @@ def _validate_sha256sums(bundle_dir: Path, sums_path: Path) -> None:
             raise ValueError(f"SHA256 mismatch for {filename}: expected {sha} got {actual}")
 
 
-def _validate_gzip(path: Path) -> None:
+def _validate_export_rows(path: Path, *, export_name: str) -> None:
     try:
-        with gzip.open(path, "rb") as gz:
-            for _ in gz:
-                pass
-    except Exception as exc:  # noqa: BLE001 - validation wants context
+        with gzip.open(path, "rt", encoding="utf-8") as gz:
+            for line_number, raw_line in enumerate(gz, start=1):
+                if not raw_line.strip():
+                    continue
+                try:
+                    row = json.loads(raw_line)
+                except json.JSONDecodeError as exc:
+                    raise ValueError(
+                        f"invalid JSON in {path.name} at line {line_number}: {exc}"
+                    ) from exc
+                require_expected_export_fields(
+                    row,
+                    export_name=export_name,
+                    context=f"{path.name} line {line_number}",
+                )
+    except (OSError, EOFError, UnicodeError) as exc:
         raise ValueError(f"gzip integrity check failed for {path.name}: {exc}") from exc
 
 
@@ -244,8 +261,7 @@ def main() -> int:
             raise SystemExit(
                 f"ERROR: manifest sha256 mismatch for {artifact.filename}: expected {artifact.sha256} got {actual}"
             )
-        if artifact.filename.endswith(".gz"):
-            _validate_gzip(path)
+        _validate_export_rows(path, export_name=artifact.name)
 
     # Validate manifest.json is itself checksummed correctly by SHA256SUMS and that all checksums match.
     _validate_sha256sums(bundle_dir, sums_path)

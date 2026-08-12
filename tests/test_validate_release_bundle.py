@@ -9,6 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from scripts import validate_release_bundle
+from scripts.export_schema import CHANGE_EXPORT_FIELDS, SNAPSHOT_EXPORT_FIELDS
 
 
 def _sha256(path: Path) -> str:
@@ -20,14 +21,28 @@ def _sha256(path: Path) -> str:
 
 
 class ValidateReleaseBundleTests(unittest.TestCase):
-    def _write_bundle(self, bundle_dir: Path, *, notes: dict[str, bool] | None = None) -> None:
+    def _write_bundle(
+        self,
+        bundle_dir: Path,
+        *,
+        notes: dict[str, bool] | None = None,
+        snapshot_row: dict[str, object] | None = None,
+        change_row: dict[str, object] | None = None,
+    ) -> None:
         snapshots_path = bundle_dir / "healtharchive-snapshots.jsonl.gz"
         changes_path = bundle_dir / "healtharchive-changes.jsonl.gz"
 
+        if snapshot_row is None:
+            snapshot_row = dict.fromkeys(SNAPSHOT_EXPORT_FIELDS)
+            snapshot_row["snapshot_id"] = 1
+        if change_row is None:
+            change_row = dict.fromkeys(CHANGE_EXPORT_FIELDS)
+            change_row["change_id"] = 1
+
         with gzip.open(snapshots_path, "wt", encoding="utf-8") as f:
-            f.write(json.dumps({"snapshot_id": 1}) + "\n")
+            f.write(json.dumps(snapshot_row) + "\n")
         with gzip.open(changes_path, "wt", encoding="utf-8") as f:
-            f.write(json.dumps({"change_id": 1}) + "\n")
+            f.write(json.dumps(change_row) + "\n")
 
         default_notes = {
             "metadataOnly": True,
@@ -108,6 +123,28 @@ class ValidateReleaseBundleTests(unittest.TestCase):
             self._write_bundle(bundle_dir, notes={"noRawHtml": False})
 
             with self.assertRaisesRegex(ValueError, "manifest.notes.noRawHtml must be true"):
+                self._run_validator(bundle_dir)
+
+    def test_unexpected_export_field_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            bundle_dir = Path(tmp)
+            snapshot_row = dict.fromkeys(SNAPSHOT_EXPORT_FIELDS)
+            snapshot_row["snapshot_id"] = 1
+            snapshot_row["unreviewed_field"] = "unexpected"
+            self._write_bundle(bundle_dir, snapshot_row=snapshot_row)
+
+            with self.assertRaisesRegex(ValueError, "unexpected fields: unreviewed_field"):
+                self._run_validator(bundle_dir)
+
+    def test_missing_export_field_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            bundle_dir = Path(tmp)
+            change_row = dict.fromkeys(CHANGE_EXPORT_FIELDS)
+            change_row["change_id"] = 1
+            del change_row["summary"]
+            self._write_bundle(bundle_dir, change_row=change_row)
+
+            with self.assertRaisesRegex(ValueError, "missing fields: summary"):
                 self._run_validator(bundle_dir)
 
 
