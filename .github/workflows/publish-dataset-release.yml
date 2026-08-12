@@ -8,9 +8,6 @@ on:
         required: false
         type: boolean
         default: false
-  schedule:
-    # Quarterly: 1st day of Jan/Apr/Jul/Oct at 06:00 UTC
-    - cron: "0 6 1 1,4,7,10 *"
 
 permissions:
   contents: write

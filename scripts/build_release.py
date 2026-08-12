@@ -12,6 +12,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+if __package__:
+    from .export_schema import require_expected_export_fields
+else:
+    from export_schema import require_expected_export_fields
+
 
 def _utc_now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -79,6 +84,7 @@ def _download_export_to_gzip_jsonl(
     *,
     api_base: str,
     path: str,
+    export_name: str,
     id_field: str,
     out_path: Path,
     limit: int,
@@ -118,7 +124,11 @@ def _download_export_to_gzip_jsonl(
                         line = raw_line
                     else:
                         line = raw_line + b"\n"
-                    obj = json.loads(line.decode("utf-8"))
+                    obj = require_expected_export_fields(
+                        json.loads(line.decode("utf-8")),
+                        export_name=export_name,
+                        context=f"{path} row {rows}",
+                    )
                     value = obj.get(id_field)
                     if isinstance(value, int):
                         last_id = value
@@ -199,6 +209,7 @@ def main() -> int:
     snapshots_meta = _download_export_to_gzip_jsonl(
         api_base=api_base,
         path="/api/exports/snapshots",
+        export_name="snapshots",
         id_field="snapshot_id",
         out_path=snapshots_path,
         limit=limit,
@@ -209,6 +220,7 @@ def main() -> int:
     changes_meta = _download_export_to_gzip_jsonl(
         api_base=api_base,
         path="/api/exports/changes",
+        export_name="changes",
         id_field="change_id",
         out_path=changes_path,
         limit=limit,

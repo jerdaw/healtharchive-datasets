@@ -6,6 +6,7 @@ public-interest archival, research, and monitoring use.
 ## Canonical docs model
 
 - Dataset release documentation is canonical in this repo (primarily `README.md` and release workflow docs).
+- Field provenance and reuse-review status are canonical in [RIGHTS.md](RIGHTS.md).
 - Backend ops/runbooks live in the backend docs portal: https://docs.healtharchive.ca
 - Export integrity contract: https://github.com/jerdaw/healtharchive/blob/main/docs/operations/export-integrity-contract.md
 - Dataset release runbook: https://github.com/jerdaw/healtharchive/blob/main/docs/operations/dataset-release-runbook.md
@@ -26,7 +27,9 @@ public-interest archival, research, and monitoring use.
 - Do not copy raw scraped content, full HTML/page bodies, backend deployment
   runbooks, credentials, private hostnames/IPs, or environment-specific paths
   into this repo.
-- This repo does not maintain a separate local roadmap or decision-record
-  archive. Track cross-repo backlog and process items in the backend docs, and
-  add local decision records only if a dataset-release-specific architectural
-  decision needs a canonical record here.
+- [ROADMAP.md](ROADMAP.md) owns this repository's dataset-release-specific
+  priorities and gates. The main HealthArchive roadmap owns cross-repository
+  backlog and process items. This repository does not maintain a separate
+  decision-record archive; add a local decision record only if a
+  dataset-release-specific architectural decision needs a canonical record
+  here.
