@@ -65,6 +65,8 @@ If validation fails, the workflow aborts and does not publish/update a release.
 - New dataset publication is paused pending reuse and governance review.
 - There is no scheduled publication or scheduled keepalive workflow.
 - Existing releases remain available and are treated as immutable.
+- No external review contact or outreach campaign is active; `RIGHTS.md`
+  contains an owner-gated factual packet only.
 - A future release requires explicit maintainer approval and manual workflow
   dispatch after the review gate is resolved.
 - Current priorities and activation gates are tracked in `ROADMAP.md`.
